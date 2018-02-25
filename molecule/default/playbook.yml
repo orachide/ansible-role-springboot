@@ -12,4 +12,4 @@
     app_artifact_file: /Users/chidi/workspace/notrechantier/target/notrechantier-0.0.1-SNAPSHOT.war
     app_extension: war
   roles:
-    - role: role_spring_boot_app
+    - role: ansible-role-springboot

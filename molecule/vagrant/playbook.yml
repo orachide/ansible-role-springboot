@@ -16,4 +16,4 @@
     local_maven_artifact_dowload: false
     app_artifact_file: /Users/chidi/spring-boot-sample.jar
   roles:
-    - role: role_spring_boot_app
+    - role: ansible-role-springboot
