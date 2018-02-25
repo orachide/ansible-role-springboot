@@ -1,0 +1,15 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    ansible_python_interpreter: python2
+    app_name: ncp
+    app_group_id: ncp
+    app_artifact_id: ncp
+    app_version: 0.0.1-SNAPSHOT
+    app_user: root
+    app_user_group: root
+    app_artifact_file: /Users/chidi/workspace/notrechantier/target/notrechantier-0.0.1-SNAPSHOT.war
+    app_extension: war
+  roles:
+    - role: role_spring_boot_app

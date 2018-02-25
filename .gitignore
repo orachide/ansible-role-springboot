@@ -1,0 +1,8 @@
+
+# molecule
+.molecule/
+
+.cache/
+
+# Python
+*.pyc

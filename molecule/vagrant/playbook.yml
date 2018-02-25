@@ -1,0 +1,19 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    ansible_python_interpreter: python2
+    # app_name: junit
+    # app_group_id: junit
+    # app_artifact_id: junit
+    # app_version: 4.11
+    app_name: spring
+    app_group_id: spring
+    app_artifact_id: spring
+    app_version: 4.11
+    app_user: vagrant
+    app_user_group: vagrant
+    local_maven_artifact_dowload: false
+    app_artifact_file: /Users/chidi/spring-boot-sample.jar
+  roles:
+    - role: role_spring_boot_app

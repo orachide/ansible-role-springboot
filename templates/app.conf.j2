@@ -1,0 +1,3 @@
+MODE=auto
+JAVA_OPTS="-Xms{{ app_java_opts_xms }} -Xmx{{ app_java_opts_xmx }} {{ app_java_opts_others | default('') }}"
+APP_NAME={{ app_name }}

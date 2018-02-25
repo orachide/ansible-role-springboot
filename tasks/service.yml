@@ -1,0 +1,25 @@
+---
+
+- name: "Check if use systemd"
+  set_fact: use_system_d={{ (ansible_distribution in ['RedHat','CentOS'] and ansible_distribution_version | version_compare('7', '>=')) }}
+
+- name: "Create systemd service file"
+  template:
+    src: app.service.j2
+    dest: "{{ sysd_script }}"
+    mode: 0644
+    owner: "{{ app_user }}"
+    group: "{{ app_user_group }}"
+  when: use_system_d
+  become: true
+  notify:
+    - "Restart application"
+
+- name: "Ensure {{  app_name }} is running"
+  systemd:
+    name: "{{  app_name | lower }}"
+    enabled: yes
+    daemon-reload: yes
+    state: started
+  when: use_system_d
+  become: true

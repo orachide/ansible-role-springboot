@@ -1,6 +1,8 @@
 Role Name
 =========
 
+[![Build Status](https://travis-ci.org/orachide/ansible-role-springboot.svg?branch=master)](https://travis-ci.org/orachide/ansible-role-springboot)
+
 A brief description of the role goes here.
 
 Requirements

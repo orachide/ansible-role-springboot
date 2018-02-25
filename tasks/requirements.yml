@@ -1,0 +1,49 @@
+---
+
+- name: "Assert app_name is defined"
+  assert:
+    that:
+      - "app_name is defined"
+    msg: "app_name must be defined"
+
+- name: "Assert app_version is defined"
+  assert:
+    that:
+      - "app_version is defined"
+    msg: "app_version must be defined"
+
+- name: "Assert app_group_id is defined"
+  assert:
+    that:
+      - "app_group_id is defined"
+    msg: "app_group_id must be defined"
+
+- name: "Assert app_artifact_id is defined"
+  assert:
+    that:
+      - "app_artifact_id is defined"
+    msg: "app_artifact_id must be defined"
+
+- name: "Assert app_version is defined"
+  assert:
+    that:
+      - "app_version is defined"
+    msg: "app_version must be defined"
+
+- name: "Assert app_user is defined"
+  assert:
+    that:
+      - "app_user is defined"
+    msg: "app_user must be defined"
+
+- name: "Assert app_user_group is defined"
+  assert:
+    that:
+      - "app_user_group is defined"
+    msg: "app_user_group must be defined"
+
+- name: "Assert app_repository_url or app_artifact_file is defined"
+  assert:
+    that:
+      - "app_repository_url is defined or app_artifact_file is defined"
+    msg: "app_repository_url or app_artifact_file must be defined"

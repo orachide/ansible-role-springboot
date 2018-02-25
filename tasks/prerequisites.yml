@@ -1,0 +1,7 @@
+---
+
+- name: "Install python-lxml required by maven_artifact module"
+  yum:
+    name: python-lxml
+    state: present
+  become: true

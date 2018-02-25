@@ -1,0 +1,11 @@
+---
+# handlers file for role_spring_boot_app
+
+- name: "Restart application"
+  systemd:
+    name: "{{ app_name | lower }}"
+    enabled: yes
+    daemon-reload: yes
+    state: restarted
+  become: true
+  when: use_system_d
