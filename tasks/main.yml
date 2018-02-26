@@ -1,11 +1,9 @@
 ---
 # tasks file for role_spring_boot_app
 
-- name: "Prerequisites"
-  include: prerequisites.yml
+- import_tasks: prerequisites.yml
 
-- name: "Var requirements"
-  include: requirements.yml
+- import_tasks: requirements.yml
 
 - name: "Ensure app root folder exist"
   file:
@@ -117,6 +115,5 @@
     owner: "{{ app_user }}"
     group: "{{ app_user_group }}"
 
-- name: "Install App as a service"
-  include: service.yml
+- import_tasks: service.yml
   when: app_as_a_service
