@@ -1,3 +1,9 @@
 MODE=auto
-JAVA_OPTS="-Xms{{ app_java_opts_xms }} -Xmx{{ app_java_opts_xmx }} {{ app_java_opts_others | default('') }}"
+JAVA_OPTS=-Xms{{ app_java_opts_xms }} -Xmx{{ app_java_opts_xmx }} {{ app_java_opts_others | default('') }}
 APP_NAME={{ app_name }}
+{% if app_service_debug is defined %}
+DEBUG= {{ app_service_debug }}
+{% endif %}
+{% if app_run_args is defined %}
+RUN_ARGS={{ app_run_args }}
+{% endif %}

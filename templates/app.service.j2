@@ -4,6 +4,8 @@ After=syslog.target
 
 [Service]
 User={{ app_user }}
+Group={{ app_user_group }}
+EnvironmentFile={{ applications_root_folder }}/{{ app_name | upper }}/{{ app_name }}.conf
 ExecStart="{{ applications_root_folder }}/{{ app_name | upper }}/{{ app_name | upper}}"
 SuccessExitStatus=143
 

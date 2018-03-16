@@ -1,15 +1,20 @@
 ---
+
 - name: Converge
   hosts: all
   vars:
     ansible_python_interpreter: python2
-    app_name: ncp
-    app_group_id: ncp
-    app_artifact_id: ncp
+    # app_state: absent
+    app_name: dummy-boot-app
+    app_group_id: fr.chidix
+    app_artifact_id: dummy-boot-app
     app_version: 0.0.1-SNAPSHOT
     app_user: root
     app_user_group: root
-    app_artifact_file: /Users/chidi/workspace/notrechantier/target/notrechantier-0.0.1-SNAPSHOT.war
-    app_extension: war
+    local_maven_artifact_dowload: false
+    app_artifact_file: "{{ playbook_dir}}/artifacts/dummy-boot-app-0.0.1-SNAPSHOT.jar"
+    app_service_debug: true
+    app_config_file_template_path: "{{ playbook_dir }}/templates/dummy-boot-app-configuration.yml.j2"
+    app_healthcheck_url: "http://localhost:8082/actuator/health"
   roles:
     - role: ansible-role-springboot

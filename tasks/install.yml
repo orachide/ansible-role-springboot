@@ -1,0 +1,130 @@
+---
+
+- name: "Install | Ensure app root folder exist"
+  file:
+    path: "{{ applications_root_folder }}/{{ app_name | upper }}"
+    state: directory
+    owner: "{{ app_user }}"
+    group: "{{ app_user_group }}"
+  become: true
+
+- name: "Install | Ensure app version folder exist"
+  file:
+    path: "{{ applications_root_folder }}/{{ app_name | upper }}/{{ app_version }}"
+    state: directory
+    owner: "{{ app_user }}"
+    group: "{{ app_user_group }}"
+
+- debug: var=app_artifact_file verbosity=1
+
+- debug: var=local_maven_artifact_dowload verbosity=1
+
+- name: "Install | Download maven artifact directly on remote host"
+  maven_artifact:
+    group_id: "{{ app_group_id }}"
+    artifact_id: "{{ app_artifact_id }}"
+    version: "{{ app_version }}"
+    classifier: "{{ app_classifier | default(omit)}}"
+    extension: "{{ app_extension }}"
+    repository_url: "{{ app_repository_url }}"
+    owner: "{{ app_user }}"
+    group: "{{ app_user_group }}"
+    username: "{{ app_repository_username | default(omit) }}"
+    password: "{{ app_repository_password | default(omit) }}"
+    dest: "{{ app_artifact_destination_file }}"
+    mode: u=rwx,g=rwx,o=r
+  when: >
+        app_artifact_file is not defined and
+        not local_maven_artifact_dowload
+  notify:
+    - "Restart application"
+
+- name: "Install | Download maven artifact on local host"
+  local_action:
+    module: maven_artifact
+    group_id: "{{ app_group_id }}"
+    artifact_id: "{{ app_artifact_id }}"
+    version: "{{ app_version }}"
+    classifier: "{{ app_classifier | default(omit)}}"
+    extension: "{{ app_extension }}"
+    repository_url: "{{ app_repository_url }}"
+    username: "{{ app_repository_username | default(omit) }}"
+    password: "{{ app_repository_password | default(omit) }}"
+    dest: "/{{ local_maven_artifact_download_temp_folder }}/{{ app_artifact_id }}-{{ app_version }}.{{ app_extension }}"
+    mode: u=rwx,g=rwx,o=r
+  when: >
+        app_artifact_file is not defined and
+        local_maven_artifact_dowload
+
+- name: Install | Set app_artifact_file
+  set_fact:
+    app_artifact_file: "/{{ local_maven_artifact_download_temp_folder }}/{{ app_artifact_id }}-{{ app_version }}.{{ app_extension }}"
+  when: >
+        app_artifact_file is not defined and
+        local_maven_artifact_dowload
+
+- name: "Install | Copy application artifact file"
+  copy:
+    src: "{{ app_artifact_file }}"
+    dest: "{{ app_artifact_destination_file }}"
+    owner: "{{ app_user }}"
+    group: "{{ app_user_group }}"
+    mode: "u=rwx,g=rwx,o=r"
+  when: >
+        app_artifact_file is defined and
+        app_artifact_file|length > 0
+  notify:
+    - "Restart application"
+
+- name: "Install | Ensure app artifact symlink exist"
+  file:
+    src: "{{ applications_root_folder }}/{{ app_name | upper }}/{{ app_version }}/{{ app_artifact_id }}-{{ app_version }}.{{ app_extension }}"
+    dest: "{{ applications_root_folder }}/{{ app_name | upper }}/{{ app_name | upper }}"
+    state: link
+    owner: "{{ app_user }}"
+    group: "{{ app_user_group }}"
+
+- name: "Install | Source application service conf"
+  template:
+    src: app.conf.j2
+    dest: "{{ app_artifact_destination_folder }}/{{ app_name }}-{{ app_version }}.conf"
+    mode: 0644
+    owner: "{{ app_user }}"
+    group: "{{ app_user_group }}"
+  notify:
+    - "Restart application"
+
+- name: "Install | Ensure application service conf symlink exist"
+  file:
+    src: "{{ app_artifact_destination_folder }}/{{ app_name }}-{{ app_version }}.conf"
+    dest: "{{ applications_root_folder }}/{{ app_name | upper }}/{{ app_name }}.conf"
+    state: link
+    owner: "{{ app_user }}"
+    group: "{{ app_user_group }}"
+
+- debug: var=app_config_file_template_path verbosity=1
+
+- name: "Install | Source application configuration file"
+  template:
+    src: "{{ app_config_file_template_path }}"
+    dest: "{{ app_artifact_destination_folder }}/application.yml"
+    mode: 0644
+    owner: "{{ app_user }}"
+    group: "{{ app_user_group }}"
+  when: >
+        app_config_file_template_path is defined
+  notify:
+    - "Restart application"
+
+- name: "Install | Ensure application configuration symlink exist"
+  file:
+    src: "{{ app_artifact_destination_folder }}/application.yml"
+    dest: "{{ applications_root_folder }}/{{ app_name | upper }}/application.yml"
+    state: link
+    owner: "{{ app_user }}"
+    group: "{{ app_user_group }}"
+  when: >
+        app_config_file_template_path is defined
+
+- import_tasks: service.yml
+  when: app_as_a_service

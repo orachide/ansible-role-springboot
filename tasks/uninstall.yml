@@ -1,0 +1,43 @@
+---
+
+- name: "Uninstall | Stop {{ app_name | lower}} service"
+  systemd:
+    name: "{{ app_name | lower }}"
+    enabled: no
+    daemon-reload: no
+    state: stopped
+  ignore_errors: true
+  when: use_system_d
+  become: true
+
+- name: "Uninstall | Remove systemd service file"
+  file:
+    path: "{{ sysd_script }}"
+    state: absent
+  ignore_errors: true
+  when: use_system_d
+  become: true
+
+- name: "Uninstall | Remove app artifact symlink"
+  file:
+    path: "{{ applications_root_folder }}/{{ app_name | upper }}/{{ app_name | upper }}"
+    state: absent
+  ignore_errors: true
+
+- name: "Uninstall | Remove application service conf symlink"
+  file:
+    path: "{{ applications_root_folder }}/{{ app_name | upper }}/{{ app_name }}.conf"
+    state: absent
+  ignore_errors: true
+
+- name: "Uninstall | Remove application configuration symlink"
+  file:
+    path: "{{ applications_root_folder }}/{{ app_name | upper }}/application.yml"
+    state: absent
+  ignore_errors: true
+
+- name: "Uninstall | Remove app version folder"
+  file:
+    path: "{{ applications_root_folder }}/{{ app_name | upper }}/{{ app_version }}"
+    state: absent
+  ignore_errors: true

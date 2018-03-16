@@ -12,3 +12,6 @@ def test_hosts_file(host):
     assert f.exists
     assert f.user == 'root'
     assert f.group == 'root'
+
+def test_app_is_listening(host):
+    assert host.socket("tcp://0.0.0.0:8082").is_listening

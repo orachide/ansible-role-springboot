@@ -1,6 +1,7 @@
 ---
 # defaults file for role_spring_boot_app
 
+app_state: present
 app_extension: jar
 app_repository_url: http://repo1.maven.org/maven2
 applications_root_folder: /opt/applis
