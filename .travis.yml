@@ -9,9 +9,7 @@ before_install:
   - sudo apt-get update
   - sudo apt-get -y install docker-ce
 install:
-  - pip install ansible==2.4.0.0
-  - pip install molecule
-  - pip install docker
+  - pip install -r ci-requirement.txt
 script:
   - molecule test
 notifications:
