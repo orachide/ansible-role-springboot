@@ -3,7 +3,7 @@ Ansible Role Spring boot App
 
 [![Build Status](https://travis-ci.org/orachide/ansible-role-springboot.svg?branch=master)](https://travis-ci.org/orachide/ansible-role-springboot)
 
-Ansible role that install Spring boot application on server.
+Ansible role that install Spring boot application as a service.
 
 This role will copy the application artifact on the server and start it. By default the role will also create a service (SystemV - init.d, Systemd) to manage application
 
@@ -12,52 +12,94 @@ Requirements
 
 Your spring boot application should be previously packaged as a fully executable jar as explained here :
 
-https://docs.spring.io/spring-boot/docs/current/reference/html/deployment-install.html#deployment-script-customization-conf-file
+https://docs.spring.io/spring-boot/docs/current/reference/html/deployment-install.html#deployment-install
+
+```xml
+<plugin>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-maven-plugin</artifactId>
+	<configuration>
+		<executable>true</executable>
+	</configuration>
+</plugin>
+```
+
 
 Role Variables
 --------------
 
 | Variables | Required | Default value | Description |
 |-----------|----------|---------------|-------------|
+| sb_app_state  | false     | *present*          | Can be *present* or *absent* depending on install or uninstall|
 | sb_app_name  | true     | *None*          | the application name |
-| sb_app_group_id  | true     | *None*          | the maven group id |
+| sb_app_group_id  | true     | *None*          | the maven artifact group id |
 | sb_app_artifact_id  | true     | *None*          | the maven artifact id |
 | sb_app_version  | true     | *None*          | the maven artifact version |
 | sb_app_user  | true     | *None*          | the owner of application files on server|
 | sb_app_user_group  | true     | *None*          | the group owninng application files |
 | sb_app_classifier  | false     | *None*          | the artifact file classifier (SOURCES,DOCS...) |
 | sb_app_extension  | true     | *jar*          | the artifact file extension. (jar,war,ear) |
-| sb_maven_repository_url  | false     | *Maven official repo*          | the url to the maven repository |
-| sb_app_artifact_file  | false     | *None*          | the local path to the artifact to deploy |
+| sb_maven_repository_url  | false     | *[Maven official repo](http://repo1.maven.org/maven2)*          | the url to the maven repository |
+| sb_app_artifact_file  | false     | *None*          | the local path to the artifact to deploy. If defined the role won't download artifact from *sb_maven_repository_url* but will use local artifact file. |
 | sb_local_maven_artifact_dowload | false | false | Artifact should be download locally first and then copy to remote host? |
+| sb_applications_root_folder  | false     | */opt/applis*         | the root folder where application files will be copy|
 | sb_app_java_opts_xms  | false     | *256M*          | JAVA XMS value |
 | sb_app_java_opts_xmx  | false     | *1024M*          | JAVA XMX value |
 | sb_app_java_opts_others  | false     | *None*          | Custom JAVA_OPTS options |
+| sb_app_config_file_template_path  | false     | *None*          | Spring appilcation.yml file template path. This file will be copy near to the artifact  |
+| sb_app_healthcheck_url  | false     | *None*          | Http url to check if the service is healthy |
+| sb_app_service_java_home  | false     | *None*          | Set the __JAVA_HOME__ to use |
+
 
 
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+This role can install JAVA using [geerlingguy.java](https://github.com/geerlingguy/ansible-role-java)
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+### Using local maven artifact
 
-    - hosts: all
-      vars:
-        sb_app_name: my-app
-        sb_app_group_id: my-groupid
-        sb_app_artifact_id: my-artifactid
-        sb_app_version: 0.0.1
-        sb_app_user: john
-        sb_app_user_group: user_group
-        sb_app_artifact_file: /path/file.jar
-        sb_app_extension: jar
+
+    - name: Converge
+      hosts: all
       roles:
         - role: ansible-role-springboot
+          sb_app_name: dummy-boot-app
+          sb_app_group_id: fr.chidix
+          sb_app_artifact_id: dummy-boot-app
+          sb_app_version: 0.0.1-SNAPSHOT
+          sb_app_extension: jar
+          sb_app_user: sbuser
+          sb_app_user_group: sbgroup
+          sb_local_maven_artifact_dowload: false
+          sb_app_artifact_file: "{{ playbook_dir}}/artifacts/dummy-boot-app-0.0.1-SNAPSHOT.jar"
+          sb_app_config_file_template_path: "{{ playbook_dir }}/templates/dummy-boot-app-configuration.yml.j2"
+          sb_app_java_opts_others: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=6006"
+          sb_app_healthcheck_url: "http://localhost:8082/actuator/health"
+
+### Using maven artifact from maven repository
+
+
+    - name: Converge
+      hosts: all
+      roles:
+        - role: ansible-role-springboot
+          sb_app_as_a_service: true
+          sb_app_name: dummy-boot-app
+          sb_app_group_id: fr.chidix
+          sb_app_artifact_id: dummy-boot-app
+          sb_app_version: 0.0.1-SNAPSHOT
+          sb_app_extension: jar
+          sb_app_user: sbuser
+          sb_app_user_group: sbgroup
+          sb_maven_repository_url: https://my-private-maven-repository/repository/maven-snapshots/
+          sb_local_maven_artifact_dowload: false
+          sb_app_config_file_template_path: "{{ playbook_dir }}/templates/dummy-boot-app-configuration.yml.j2"
+          sb_app_healthcheck_url: "http://localhost:8082/actuator/health"
 
 License
 -------
