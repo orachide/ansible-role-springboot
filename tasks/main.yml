@@ -3,7 +3,7 @@
 
 - import_tasks: prerequisites.yml
 
-- import_tasks: requirements.yml
+- import_tasks: check_vars.yml
 
 - name: Set application destination folder
   set_fact:
