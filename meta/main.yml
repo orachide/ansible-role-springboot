@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: orachide
-  description: spring-boot as a service
+  description: Deploy Spring Boot application as a service (initd or Systemd)
   company: chidix.fr
 
   license: license (GPLv2, CC-BY, etc)
