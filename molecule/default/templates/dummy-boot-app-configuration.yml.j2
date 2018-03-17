@@ -1,5 +1,10 @@
 server:
     port: 8082
 logging:
+    file: /var/log/DUMMY-BOOT-APP/dummy-boot-app.log
+    file.max-size: 1MB
+    file.max-history: 10
     level:
-        root: DEBUG
+        root: INFO
+        org.springframework.web: WARN
+        org.hibernate: ERROR

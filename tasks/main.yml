@@ -7,27 +7,32 @@
 
 - name: Set application destination folder
   set_fact:
-    app_artifact_destination_folder: "{{ applications_root_folder }}/{{ app_name | upper }}/{{ app_version }}"
+    sb_app_artifact_destination_folder: "{{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/{{ sb_app_version }}"
 
 - name: Set artifact destination file
   set_fact:
-    app_artifact_destination_file: "{{ app_artifact_destination_folder }}/{{ app_artifact_id }}-{{ app_version }}.{{ app_extension }}"
+    sb_app_artifact_destination_file: "{{ sb_app_artifact_destination_folder }}/{{ sb_app_artifact_id }}-{{ sb_app_version }}.{{ sb_app_extension }}"
 
 - name: " Service | Check if use systemd"
   set_fact: use_system_d={{ (ansible_distribution in ['RedHat','CentOS'] and ansible_distribution_version | version_compare('7', '>=')) }}
 
+- debug: var=ansible_distribution_version
+
+- name: " Service | Check if use use_initd"
+  set_fact: use_initd={{ (ansible_distribution in ['RedHat','CentOS'] and ansible_distribution_version | version_compare('7', '<')) }}
+
 - import_tasks: install.yml
   when: >
-        app_state == 'present'
+        sb_app_state == 'present'
 
 - import_tasks: uninstall.yml
   when: >
-        app_state == 'absent'
+        sb_app_state == 'absent'
 
 - meta: flush_handlers
 
 - import_tasks: healthcheck.yml
   when: >
-        app_healthcheck_url is defined and
-        app_healthcheck_url|length > 0 and
-        app_state == 'present'
+        sb_app_healthcheck_url is defined and
+        sb_app_healthcheck_url|length > 0 and
+        sb_app_state == 'present'

@@ -1,22 +1,35 @@
 ---
 
+# SystemD service setup
+
 - name: "Service | Create systemd service file"
   template:
-    src: app.service.j2
+    src: app.systemd.service.j2
     dest: "{{ sysd_script }}"
     mode: 0644
-    owner: "{{ app_user }}"
-    group: "{{ app_user_group }}"
+    owner: "{{ sb_app_user }}"
+    group: "{{ sb_app_user_group }}"
   when: use_system_d
   become: true
   notify:
     - "Restart application"
 
-- name: "Service | Ensure {{  app_name }} service is started"
-  systemd:
-    name: "{{  app_name | lower }}"
+# initd (System V) service setup
+
+- name: "Service | Ensure app artifact initd symlink exist"
+  file:
+    src: "{{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/{{ sb_app_version }}/{{ sb_app_artifact_id }}-{{ sb_app_version }}.{{ sb_app_extension }}"
+    dest: "/etc/init.d/{{ sb_app_name | lower }}"
+    state: link
+    owner: "{{ sb_app_user }}"
+    group: "{{ sb_app_user_group }}"
+  become: true
+  when: >
+        use_initd
+
+- name: "Service | Ensure {{  sb_app_name }} service is started"
+  service:
+    name: "{{  sb_app_name | lower }}"
     enabled: yes
-    daemon-reload: yes
     state: started
-  when: use_system_d
   become: true

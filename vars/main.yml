@@ -2,4 +2,4 @@
 # vars file for role_spring_boot_app
 
 sysd_user_services_folder: /usr/lib/systemd/system
-sysd_script: "{{ sysd_user_services_folder }}/{{ app_name | lower }}.service"
+sysd_script: "{{ sysd_user_services_folder }}/{{ sb_app_name | lower }}.service"

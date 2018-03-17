@@ -1,13 +1,13 @@
 ---
 
-- debug: var=app_healthcheck_url verbosity=1
+- debug: var=sb_app_healthcheck_url verbosity=1
 
-- name: "Heathcheck | Wait for {{ app_name }} to be healthy"
+- name: "Heathcheck | Wait for {{ sb_app_name }} to be healthy"
   uri:
-    url: "{{ app_healthcheck_url }}"
+    url: "{{ sb_app_healthcheck_url }}"
     method: GET
     status_code: 200
   register: result
   until: result.status == 200
-  retries: 15
-  delay: 5
+  retries: 10
+  delay: 6

@@ -1,7 +1,20 @@
 ---
 
-- name: "Install python-lxml required by maven_artifact module"
-  yum:
+- name: "Prerequisites | Install python-lxml required by maven_artifact module on remote host"
+  package:
     name: python-lxml
     state: present
+  when: >
+        sb_app_artifact_file is not defined and
+        not sb_local_maven_artifact_dowload
+  become: true
+
+- name: "Prerequisites | Install python-lxml required by maven_artifact module on local host"
+  local_action:
+    module: package
+    name: python-lxml
+    state: present
+  when: >
+        sb_app_artifact_file is not defined and
+        sb_local_maven_artifact_dowload
   become: true

@@ -1,13 +1,13 @@
 ---
 # defaults file for role_spring_boot_app
 
-app_state: present
-app_extension: jar
-app_repository_url: http://repo1.maven.org/maven2
-applications_root_folder: /opt/applis
-app_as_a_service: true
+sb_app_state: present
+sb_app_extension: jar
+sb_maven_repository_url: http://repo1.maven.org/maven2
+sb_applications_root_folder: /opt/applis
+sb_app_as_a_service: true
 # download maven artifact on ansible host
-local_maven_artifact_dowload: true
-local_maven_artifact_download_temp_folder: /tmp
-app_java_opts_xms: 256M
-app_java_opts_xmx: 1024M
+sb_local_maven_artifact_dowload: true
+sb_local_maven_artifact_download_temp_folder: /tmp
+sb_app_java_opts_xms: 256M
+sb_app_java_opts_xmx: 1024M

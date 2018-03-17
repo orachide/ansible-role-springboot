@@ -1,43 +1,57 @@
 ---
 
-- name: "Uninstall | Stop {{ app_name | lower}} service"
-  systemd:
-    name: "{{ app_name | lower }}"
+- name: "Uninstall | Check if initd service Exists"
+  stat:
+    path: "/etc/init.d/{{ sb_app_name | lower }}"
+  register: initd_service_status
+
+- name: "Uninstall | Check if systemd service Exists"
+  stat:
+    path: "{{ sysd_script }}"
+  register: systemd_service_status
+
+- name: "Uninstall | Stop {{ sb_app_name | lower}} service"
+  service:
+    name: "{{ sb_app_name | lower }}"
     enabled: no
-    daemon-reload: no
     state: stopped
-  ignore_errors: true
-  when: use_system_d
+  when: >
+        (initd_service_status.stat.exists and use_initd) or
+        (systemd_service_status.stat.exists and use_system_d)
   become: true
 
 - name: "Uninstall | Remove systemd service file"
   file:
     path: "{{ sysd_script }}"
     state: absent
-  ignore_errors: true
-  when: use_system_d
+  when: >
+        systemd_service_status.stat.exists and use_system_d
+  become: true
+
+- name: "Uninstall | Remove initd service file"
+  file:
+    path: "/etc/init.d/{{ sb_app_name | lower }}"
+    state: absent
+  when: >
+        initd_service_status.stat.exists and use_initd
   become: true
 
 - name: "Uninstall | Remove app artifact symlink"
   file:
-    path: "{{ applications_root_folder }}/{{ app_name | upper }}/{{ app_name | upper }}"
+    path: "{{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/{{ sb_app_name | upper }}"
     state: absent
-  ignore_errors: true
 
 - name: "Uninstall | Remove application service conf symlink"
   file:
-    path: "{{ applications_root_folder }}/{{ app_name | upper }}/{{ app_name }}.conf"
+    path: "{{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/{{ sb_app_name }}.conf"
     state: absent
-  ignore_errors: true
 
 - name: "Uninstall | Remove application configuration symlink"
   file:
-    path: "{{ applications_root_folder }}/{{ app_name | upper }}/application.yml"
+    path: "{{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/application.yml"
     state: absent
-  ignore_errors: true
 
 - name: "Uninstall | Remove app version folder"
   file:
-    path: "{{ applications_root_folder }}/{{ app_name | upper }}/{{ app_version }}"
+    path: "{{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/{{ sb_app_version }}"
     state: absent
-  ignore_errors: true
