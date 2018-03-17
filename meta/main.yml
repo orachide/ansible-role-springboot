@@ -11,18 +11,17 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
-      - 6
-      - 7
+        - 6
+        - 7
     - name: Ubuntu
       versions:
-      - all
+        - all
 
   galaxy_tags:
-    - spring-boot
+    - springboot
     - systemd
     - systemv
     - java
 
 dependencies:
   - geerlingguy.java
-
