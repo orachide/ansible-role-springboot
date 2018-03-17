@@ -1,0 +1,30 @@
+---
+dependency:
+  name: galaxy
+  options:
+    ignore-certs: True
+    ignore-errors: True
+    role-file: requirements.yml
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: sb_centos6_maven_repo
+    image: centos:6
+    privileged: True
+  - name: sb_centos7_maven_repo
+    image: centos:7
+    privileged: True
+    command: '/sbin/init'
+    cap_add: ['SYS_ADMIN', 'SETPCAP']
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+scenario:
+  name: using-maven-repo
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

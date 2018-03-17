@@ -1,0 +1,11 @@
+# {{ansible_managed}}
+server:
+    port: 8082
+logging:
+    file: {{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/logs/dummy-boot-app.log
+    file.max-size: 1MB
+    file.max-history: 10
+    level:
+        root: DEBUG
+        org.springframework.web: WARN
+        org.hibernate: ERROR

@@ -9,8 +9,6 @@ driver:
   name: docker
 lint:
   name: yamllint
-  options:
-    strict: true
 platforms:
   - name: sb_centos6
     image: centos:6

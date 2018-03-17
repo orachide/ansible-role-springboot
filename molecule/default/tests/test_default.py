@@ -10,7 +10,6 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 def test_service_is_started(host):
     ansible_vars = host.ansible.get_variables()
     if (ansible_vars['inventory_hostname'] == 'sb_centos6'):
-        print('Centos6 done')
         f = host.file('/etc/init.d/dummy-boot-app')
         assert f.exists
         assert f.user == 'sbuser'

@@ -1,9 +1,15 @@
+# {{ansible_managed}}
 MODE=auto
+{% if sb_app_service_java_home is defined %}
+JAVA_HOME="{{ sb_app_service_java_home }}"
+{% endif %}
 JAVA_OPTS="-Xms{{ sb_app_java_opts_xms }} -Xmx{{ sb_app_java_opts_xmx }} {{ sb_app_java_opts_others | default('') }}"
-sb_app_NAME={{ sb_app_name }}
 {% if sb_app_service_debug is defined %}
 DEBUG="{{ sb_app_service_debug }}"
 {% endif %}
 {% if sb_app_run_args is defined %}
 RUN_ARGS={{ sb_app_run_args }}
 {% endif %}
+PID_FOLDER={{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/run
+LOG_FOLDER={{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/logs
+LOG_FILENAME={{ sb_app_name }}_out.log

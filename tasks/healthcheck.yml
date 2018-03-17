@@ -2,7 +2,7 @@
 
 - debug: var=sb_app_healthcheck_url verbosity=1
 
-- name: "Heathcheck | Wait for {{ sb_app_name }} to be healthy"
+- name: "Healthcheck | Wait for {{ sb_app_name }} to be healthy"
   uri:
     url: "{{ sb_app_healthcheck_url }}"
     method: GET

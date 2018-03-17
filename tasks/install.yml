@@ -27,6 +27,7 @@
     classifier: "{{ sb_app_classifier | default(omit)}}"
     extension: "{{ sb_app_extension }}"
     repository_url: "{{ sb_maven_repository_url }}"
+    validate_certs: "{{ sb_maven_repository_validate_certs | default('no') }}"
     owner: "{{ sb_app_user }}"
     group: "{{ sb_app_user_group }}"
     username: "{{ sb_app_repository_username | default(omit) }}"
