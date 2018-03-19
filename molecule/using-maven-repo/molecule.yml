@@ -10,9 +10,6 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: sb_centos6_maven_repo
-    image: centos:6
-    privileged: True
   - name: sb_centos7_maven_repo
     image: centos:7
     privileged: True

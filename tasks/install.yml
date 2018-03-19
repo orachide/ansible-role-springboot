@@ -15,6 +15,17 @@
     owner: "{{ sb_app_user }}"
     group: "{{ sb_app_user_group }}"
 
+- name: "Install | Ensure PID_FOLDER exist (only for init.d)"
+  file:
+    path: "{{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/{{ item }}"
+    state: directory
+    owner: "{{ sb_app_user }}"
+    group: "{{ sb_app_user_group }}"
+    mode: 0755
+  when: not use_system_d
+  with_items:
+    - run
+
 - debug: var=sb_app_artifact_file verbosity=1
 
 - debug: var=sb_local_maven_artifact_dowload verbosity=1
@@ -33,7 +44,7 @@
     username: "{{ sb_app_repository_username | default(omit) }}"
     password: "{{ sb_app_repository_password | default(omit) }}"
     dest: "{{ sb_app_artifact_destination_file }}"
-    mode: u=rwx,g=rwx,o=r
+    mode: 0500
   when: >
         sb_app_artifact_file is not defined and
         not sb_local_maven_artifact_dowload
@@ -52,7 +63,7 @@
     username: "{{ sb_app_repository_username | default(omit) }}"
     password: "{{ sb_app_repository_password | default(omit) }}"
     dest: "/{{ sb_local_maven_artifact_download_temp_folder }}/{{ sb_app_artifact_id }}-{{ sb_app_version }}.{{ sb_app_extension }}"
-    mode: u=rwx,g=rwx,o=r
+    mode: 0500
   when: >
         sb_app_artifact_file is not defined and
         sb_local_maven_artifact_dowload
@@ -70,7 +81,7 @@
     dest: "{{ sb_app_artifact_destination_file }}"
     owner: "{{ sb_app_user }}"
     group: "{{ sb_app_user_group }}"
-    mode: "u=rwx,g=rwx,o=r"
+    mode: 0500
   when: >
         sb_app_artifact_file is defined and
         sb_app_artifact_file|length > 0

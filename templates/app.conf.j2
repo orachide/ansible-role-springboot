@@ -10,6 +10,6 @@ DEBUG="{{ sb_app_service_debug }}"
 {% if sb_app_run_args is defined %}
 RUN_ARGS={{ sb_app_run_args }}
 {% endif %}
-PID_FOLDER={{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/run
-LOG_FOLDER={{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/logs
-LOG_FILENAME={{ sb_app_name }}_out.log
+PID_FOLDER={{ sb_initd_pid_folder }}
+LOG_FOLDER={{ sb_initd_log_folder }}
+LOG_FILENAME={{ sb_initd_log_filename }}

@@ -11,3 +11,8 @@ sb_local_maven_artifact_dowload: true
 sb_local_maven_artifact_download_temp_folder: /tmp
 sb_app_java_opts_xms: 256M
 sb_app_java_opts_xmx: 1024M
+
+# initd conf
+sb_initd_pid_folder: "{{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/run"
+sb_initd_log_folder: "{{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/logs"
+sb_initd_log_filename: "{{ sb_app_name }}_out.log"
