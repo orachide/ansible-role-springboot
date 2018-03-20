@@ -2,6 +2,7 @@ Ansible Role Spring boot App
 =========
 
 [![Build Status](https://travis-ci.org/orachide/ansible-role-springboot.svg?branch=master)](https://travis-ci.org/orachide/ansible-role-springboot)
+[![Ansible Galaxy](https://img.shields.io/badge/galaxy-jonashackt-660198.svg)](https://galaxy.ansible.com/orachide)
 
 Ansible role that install Spring boot application as a service.
 

@@ -24,4 +24,7 @@ galaxy_info:
     - java
 
 dependencies:
-  - geerlingguy.java
+  - role: geerlingguy.java
+    # when: "ansible_os_family == 'RedHat'"
+    java_packages:
+      - "{{ sb_java_package }}"
