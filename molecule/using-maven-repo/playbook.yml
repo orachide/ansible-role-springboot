@@ -15,6 +15,8 @@
       sb_app_user: sbuser
       sb_app_user_group: sbgroup
       sb_maven_repository_url: https://nexus3.apps.osocloud.chidix.fr/repository/maven-snapshots/
+      sb_app_repository_username: test
+      sb_app_repository_password: test
       # sb_applications_root_folder: /opt/applis
       sb_local_maven_artifact_dowload: false
       # sb_app_service_debug: true

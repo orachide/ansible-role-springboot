@@ -15,6 +15,7 @@ Your spring boot application should be previously packaged as a fully executable
 
 https://docs.spring.io/spring-boot/docs/current/reference/html/deployment-install.html#deployment-install
 
+
 ```xml
 <plugin>
 	<groupId>org.springframework.boot</groupId>
@@ -31,16 +32,18 @@ Role Variables
 
 | Variables | Required | Default value | Description |
 |-----------|----------|---------------|-------------|
-| sb_app_state  | false     | *present*          | Can be *present* or *absent* depending on install or uninstall|
 | sb_app_name  | true     | *None*          | the application name |
 | sb_app_group_id  | true     | *None*          | the maven artifact group id |
 | sb_app_artifact_id  | true     | *None*          | the maven artifact id |
 | sb_app_version  | true     | *None*          | the maven artifact version |
 | sb_app_user  | true     | *None*          | the owner of application files on server|
 | sb_app_user_group  | true     | *None*          | the group owninng application files |
-| sb_app_classifier  | false     | *None*          | the artifact file classifier (SOURCES,DOCS...) |
 | sb_app_extension  | true     | *jar*          | the artifact file extension. (jar,war,ear) |
+| sb_app_state  | false     | *present*          | Can be *present* or *absent* depending on install or uninstall|
+| sb_app_classifier  | false     | *None*          | the artifact file classifier (SOURCES,DOCS...) |
 | sb_maven_repository_url  | false     | *[Maven official repo](http://repo1.maven.org/maven2)*          | the url to the maven repository |
+| sb_app_repository_username  | false     | *None*          | username used for mave repo authentication |
+| sb_app_repository_password  | false     | *None*          | password used for mave repo authentication |
 | sb_app_artifact_file  | false     | *None*          | the local path to the artifact to deploy. If defined the role won't download artifact from *sb_maven_repository_url* but will use local artifact file. |
 | sb_local_maven_artifact_dowload | false | false | Artifact should be download locally first and then copy to remote host? |
 | sb_applications_root_folder  | false     | */opt/applis*         | the root folder where application files will be copy|
@@ -98,6 +101,8 @@ Example Playbook
           sb_app_user: sbuser
           sb_app_user_group: sbgroup
           sb_maven_repository_url: https://my-private-maven-repository/repository/maven-snapshots/
+          sb_app_repository_username: my-user
+          sb_app_repository_password: my-very-secure-password
           sb_local_maven_artifact_dowload: false
           sb_app_config_file_template_path: "{{ playbook_dir }}/templates/dummy-boot-app-configuration.yml.j2"
           sb_app_healthcheck_url: "http://localhost:8082/actuator/health"
@@ -110,4 +115,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+This role was created in 2018 by Rachide Ouattara.
