@@ -115,4 +115,4 @@ BSD
 Author Information
 ------------------
 
-This role was created in 2018 by Rachide Ouattara.
+This role was created in 2018 by [Rachide Ouattara](https://orachide.chidix.fr/).
