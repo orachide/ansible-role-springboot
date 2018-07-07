@@ -52,7 +52,8 @@ Role Variables
 | sb_app_java_opts_others  | false     | *None*          | Custom JAVA_OPTS options |
 | sb_app_config_file_template_path  | false     | *None*          | Spring appilcation.yml file template path. This file will be copy near to the artifact  |
 | sb_app_logback_file_template_path  | false     | *None*          | Logback file template path. This file will be loaded by setting `logging.config` system property  |
-| sb_app_healthcheck_url  | false     | *None*          | Http url to check if the service is healthy |
+| sb_app_healthcheck_urls  | false     | *None*          | Http urls to check if the service is healthy (should be an array)|
+| sb_app_healthcheck_ports  | false     | *None*          | TCP Ports to check if the service is healthy (should be an array)|
 | sb_app_service_java_home  | false     | *None*          | Set the __JAVA_HOME__ to use |
 
 
@@ -84,7 +85,10 @@ Example Playbook
           sb_app_artifact_file: "{{ playbook_dir}}/artifacts/dummy-boot-app-0.0.1-SNAPSHOT.jar"
           sb_app_config_file_template_path: "{{ playbook_dir }}/templates/dummy-boot-app-configuration.yml.j2"
           sb_app_java_opts_others: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=6006"
-          sb_app_healthcheck_url: "http://localhost:8082/actuator/health"
+          sb_app_healthcheck_urls:
+            - "http://localhost:8082/actuator/health"
+          sb_app_healthcheck_ports:
+            - 8082
 
 ### Using maven artifact from maven repository
 
@@ -106,7 +110,10 @@ Example Playbook
           sb_app_repository_password: my-very-secure-password
           sb_local_maven_artifact_dowload: false
           sb_app_config_file_template_path: "{{ playbook_dir }}/templates/dummy-boot-app-configuration.yml.j2"
-          sb_app_healthcheck_url: "http://localhost:8082/actuator/health"
+          sb_app_healthcheck_urls:
+            - "http://localhost:8082/actuator/health"
+          sb_app_healthcheck_ports:
+            - 8082
 
 License
 -------
