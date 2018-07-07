@@ -21,5 +21,6 @@
       sb_app_artifact_file: "{{ playbook_dir}}/artifacts/dummy-boot-app-0.0.1-SNAPSHOT.jar"
       # sb_app_service_debug: true
       sb_app_config_file_template_path: "{{ playbook_dir }}/templates/dummy-boot-app-configuration.yml.j2"
+      sb_app_logback_file_template_path: "{{ playbook_dir }}/templates/logback.xml.j2"
       sb_app_java_opts_others: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=6006"
       sb_app_healthcheck_url: "http://localhost:8082/actuator/health"

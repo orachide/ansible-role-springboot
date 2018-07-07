@@ -3,7 +3,7 @@ MODE=auto
 {% if sb_app_service_java_home is defined %}
 JAVA_HOME="{{ sb_app_service_java_home }}"
 {% endif %}
-JAVA_OPTS="-Xms{{ sb_app_java_opts_xms }} -Xmx{{ sb_app_java_opts_xmx }} {{ sb_app_java_opts_others | default('') }}"
+JAVA_OPTS="-Xms{{ sb_app_java_opts_xms }} -Xmx{{ sb_app_java_opts_xmx }} {% if sb_app_logback_file_template_path is defined %}-Dlogging.config={{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/{% if use_initd %}{{ sb_app_version }}/{% endif %}logback-spring.xml{% endif %} {{ sb_app_java_opts_others | default('') }}"
 {% if sb_app_service_debug is defined %}
 DEBUG="{{ sb_app_service_debug }}"
 {% endif %}

@@ -51,6 +51,7 @@ Role Variables
 | sb_app_java_opts_xmx  | false     | *1024M*          | JAVA XMX value |
 | sb_app_java_opts_others  | false     | *None*          | Custom JAVA_OPTS options |
 | sb_app_config_file_template_path  | false     | *None*          | Spring appilcation.yml file template path. This file will be copy near to the artifact  |
+| sb_app_logback_file_template_path  | false     | *None*          | Logback file template path. This file will be loaded by setting `logging.config` system property  |
 | sb_app_healthcheck_url  | false     | *None*          | Http url to check if the service is healthy |
 | sb_app_service_java_home  | false     | *None*          | Set the __JAVA_HOME__ to use |
 

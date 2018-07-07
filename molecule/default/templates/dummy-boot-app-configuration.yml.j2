@@ -5,7 +5,3 @@ logging:
     file: {{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/logs/dummy-boot-app.log
     file.max-size: 1MB
     file.max-history: 10
-    level:
-        root: INFO
-        org.springframework.web: WARN
-        org.hibernate: ERROR
