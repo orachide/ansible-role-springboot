@@ -4,6 +4,7 @@
   uri:
     url: "{{ item }}"
     method: GET
+    validate_certs: "{{ sb_app_healthcheck_urls_validate_certs | default('no') }}"
     status_code: 200
   register: result
   until: result.status == 200

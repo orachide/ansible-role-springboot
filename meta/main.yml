@@ -6,7 +6,7 @@ galaxy_info:
 
   license: license (GPLv2, CC-BY, etc)
 
-  min_ansible_version: 2.0
+  min_ansible_version: 2.4
 
   platforms:
     - name: EL

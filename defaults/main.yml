@@ -17,6 +17,7 @@ sb_initd_pid_folder: "{{ sb_applications_root_folder }}/{{ sb_app_name | upper }
 sb_initd_log_folder: "{{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/logs"
 sb_initd_log_filename: "{{ sb_app_name }}_out.log"
 
+sb_app_healthcheck_urls_validate_certs: no
 sb_app_healthcheck_urls_retry_count: 10
 sb_app_healthcheck_urls_retry_delay: 6
 
