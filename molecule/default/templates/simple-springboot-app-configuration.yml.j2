@@ -1,0 +1,13 @@
+# {{ansible_managed}}
+server:
+    http:
+        port: 8080 # http port
+    port: 8443 # https ports using the self signed cert
+    ssl:
+        key-store: classpath:selfsigned.jks
+        key-store-password: password
+        key-password: password
+logging:
+    file: {{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/logs/simple-springboot-app.log
+    file.max-size: 1MB
+    file.max-history: 10

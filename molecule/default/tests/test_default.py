@@ -10,17 +10,23 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 def test_service_is_started(host):
     ansible_vars = host.ansible.get_variables()
     if (ansible_vars['inventory_hostname'] == 'sb_centos6'):
-        f = host.file('/etc/init.d/dummy-boot-app')
+        f = host.file('/etc/init.d/simple-springboot-app')
         assert f.exists
         assert f.user == 'sbuser'
         assert f.group == 'sbgroup'
     else:
-        service = host.service('dummy-boot-app')
+        service = host.service('simple-springboot-app')
         assert service.is_running
         assert service.is_enabled
 
 
-def test_app_is_listening(host):
-    cmd = host.run("curl -IL localhost:8082/actuator/health")
+def test_app_is_listening_on_http(host):
+    cmd = host.run("curl -IL http://localhost:8080/actuator/health")
+    assert cmd.rc == 0
+    assert re.search(r'HTTP/1.1 200', cmd.stdout)
+
+
+def test_app_is_listening_on_https(host):
+    cmd = host.run("curl -IL -k https://localhost:8443/actuator/health")
     assert cmd.rc == 0
     assert re.search(r'HTTP/1.1 200', cmd.stdout)
