@@ -13,3 +13,6 @@ RUN_ARGS={{ sb_app_run_args }}
 PID_FOLDER={{ sb_initd_pid_folder }}
 LOG_FOLDER={{ sb_initd_log_folder }}
 LOG_FILENAME={{ sb_initd_log_filename }}
+{% if sb_app_stop_wait_time is defined %}
+STOP_WAIT_TIME={{ sb_app_stop_wait_time }}
+{% endif %}

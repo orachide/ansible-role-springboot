@@ -50,11 +50,13 @@ Role Variables
 | sb_app_java_opts_xms  | false     | *256M*          | JAVA XMS value |
 | sb_app_java_opts_xmx  | false     | *1024M*          | JAVA XMX value |
 | sb_app_java_opts_others  | false     | *None*          | Custom JAVA_OPTS options |
-| sb_app_config_file_template_path  | false     | *None*          | Spring appilcation.yml file template path. This file will be copy near to the artifact  |
+| sb_app_config_file_template_path  | false     | *None*          | Spring application.yml file template path. This file will be copy near to the artifact  |
+| sb_app_config_file_final_name  | false     | **application.yml**          | Configuration file final name, could be *.yml or *.properties  |
 | sb_app_logback_file_template_path  | false     | *None*          | Logback file template path. This file will be loaded by setting `logging.config` system property  |
 | sb_app_healthcheck_urls  | false     | *None*          | Http urls to check if the service is healthy (should be an array)|
 | sb_app_healthcheck_ports  | false     | *None*          | TCP Ports to check if the service is healthy (should be an array)|
 | sb_app_service_java_home  | false     | *None*          | Set the __JAVA_HOME__ to use |
+| sb_app_stop_wait_time  | false     | 60 secs         | The time in seconds to wait when stopping the application before forcing a shutdown  |
 
 
 

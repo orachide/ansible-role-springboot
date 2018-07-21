@@ -25,6 +25,7 @@
   when: not use_system_d
   with_items:
     - run
+    - logs
 
 - debug: var=sb_app_artifact_file verbosity=1
 
@@ -102,7 +103,7 @@
   template:
     src: app.conf.j2
     dest: "{{ sb_app_artifact_destination_folder }}/{{ sb_app_name }}-{{ sb_app_version }}.conf"
-    mode: 0644
+    mode: 0400
     owner: "{{ sb_app_user }}"
     group: "{{ sb_app_user_group }}"
   notify:
@@ -123,7 +124,7 @@
 - name: "Install | Source application configuration file"
   template:
     src: "{{ sb_app_config_file_template_path }}"
-    dest: "{{ sb_app_artifact_destination_folder }}/application.yml"
+    dest: "{{ sb_app_artifact_destination_folder }}/{{ sb_app_config_file_final_name }}"
     mode: 0644
     owner: "{{ sb_app_user }}"
     group: "{{ sb_app_user_group }}"
@@ -134,8 +135,8 @@
 
 - name: "Install | Ensure application configuration symlink exist"
   file:
-    src: "{{ sb_app_artifact_destination_folder }}/application.yml"
-    dest: "{{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/application.yml"
+    src: "{{ sb_app_artifact_destination_folder }}/{{ sb_app_config_file_final_name }}"
+    dest: "{{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/{{ sb_app_config_file_final_name }}"
     state: link
     owner: "{{ sb_app_user }}"
     group: "{{ sb_app_user_group }}"
