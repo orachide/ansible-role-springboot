@@ -3,6 +3,12 @@
   hosts: all
   vars:
     sb_java_package: java-1.8.0-openjdk
+    sb_user_groups_definitions:
+      - name: sbgroup
+    sb_users_definition:
+      - name: Simple Spring boot App User
+        username: sbuser
+        groups: [sbgroup]
   roles:
     - role: ansible-role-springboot
       # sb_app_state: absent

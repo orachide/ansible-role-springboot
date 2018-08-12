@@ -1,16 +1,4 @@
 ---
 - name: Prepare
   hosts: all
-  gather_facts: True
-  pre_tasks:
-    - name: Create sbgroup
-      group:
-        name: sbgroup
-        state: present
-
-    - name: Create sbuser
-      user:
-        name: sbuser
-        comment: "Spring boot app user"
-        uid: 1040
-        group: sbgroup
+  gather_facts: False

@@ -1,0 +1,4 @@
+ci-requirement.txt export-ignore
+.travis.yml export-ignore
+molecule export-ignore
+.yamllint export-ignore
