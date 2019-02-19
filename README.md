@@ -117,6 +117,40 @@ Example Playbook
           sb_app_healthcheck_ports:
             - 8082
 
+### Deploy multiple microservices to the same hosts
+
+    - name: Converge
+      hosts: all
+      vars:
+        # add common vars for all deployments up here
+        sb_java_package: java-1.8.0-openjdk
+        sb_app_as_a_service: true
+        sb_app_extension: jar
+        sb_applications_root_folder: /opt/applis
+        sb_app_group_id: "org.springframework.samples.service.service"
+      roles:
+        - {
+          role: "ansible-role-springboot",
+          sb_app_name: "microservices-registration",
+          sb_app_artifact_id: "my-frontend",
+          sb_app_version: "2.0.0.RELEASE",
+          sb_app_run_args: '"registration 8082"',
+          sb_app_healthcheck_urls: [
+            "http://localhost:8082/actuator/health"
+          ]
+        }
+        - {
+          role: "ansible-role-springboot",
+          sb_app_name: "microservices-web",
+          sb_app_artifact_id: "my-backend",
+          sb_app_version: "2.0.0.RELEASE",
+          sb_app_run_args: '"web 8083"',
+          sb_app_healthcheck_urls: [
+            "http://localhost:8083/actuator/health"
+          ]
+        }
+
+
 License
 -------
 
