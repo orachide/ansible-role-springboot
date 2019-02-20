@@ -67,6 +67,7 @@ Dependencies
 ------------
 
 This role can install JAVA using [geerlingguy.java](https://github.com/geerlingguy/ansible-role-java)
+
 This role can create APP user using [singleplatform-eng.users](https://github.com/singleplatform-eng/ansible-users)
 
 Example Playbook
