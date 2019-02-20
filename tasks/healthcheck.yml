@@ -11,7 +11,9 @@
   retries: "{{ sb_app_healthcheck_urls_retry_count }}"
   delay: "{{ sb_app_healthcheck_urls_retry_delay }}"
   with_items: "{{ sb_app_healthcheck_urls }}"
-  when: sb_app_healthcheck_urls is defined
+  when: >
+    sb_app_healthcheck_urls is defined and
+    sb_app_as_a_service
 
 - name: "Healthcheck | Wait for {{  sb_app_name }} to be healthy on TCP Ports {{ sb_app_healthcheck_ports }}"
   wait_for:
@@ -19,4 +21,6 @@
     port: "{{ item }}"
     timeout: "{{ sb_app_healthcheck_ports_timeout }}"
   with_items: "{{ sb_app_healthcheck_ports }}"
-  when: sb_app_healthcheck_ports is defined
+  when: >
+    sb_app_healthcheck_ports is defined and
+    sb_app_as_a_service

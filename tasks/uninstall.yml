@@ -16,8 +16,9 @@
     enabled: no
     state: stopped
   when: >
-        (initd_service_status.stat.exists and use_initd) or
-        (systemd_service_status.stat.exists and use_system_d)
+        ((initd_service_status.stat.exists and use_initd) or
+        (systemd_service_status.stat.exists and use_system_d)) and
+        sb_app_as_a_service
   become: true
 
 - name: "Uninstall | Remove systemd service file"
@@ -25,7 +26,7 @@
     path: "{{ sysd_script }}"
     state: absent
   when: >
-        systemd_service_status.stat.exists and use_system_d
+        systemd_service_status.stat.exists and use_system_d and sb_app_as_a_service
   become: true
 
 - name: "Uninstall | Remove initd service file"
@@ -33,7 +34,7 @@
     path: "/etc/init.d/{{ sb_app_name | lower }}"
     state: absent
   when: >
-        initd_service_status.stat.exists and use_initd
+        initd_service_status.stat.exists and use_initd and sb_app_as_a_service
   become: true
 
 - name: "Uninstall | Remove app artifact symlink"
@@ -50,6 +51,20 @@
   file:
     path: "{{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/application.yml"
     state: absent
+
+- name: "Uninstall | Remove application logback  symlink"
+  file:
+    path: "{{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/logback-spring.xml"
+    state: absent
+  when: >
+        sb_app_logback_file_template_path is defined
+
+- name: "Uninstall | Remove SystemV run folder"
+  file:
+    path: "{{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/run"
+    state: absent
+  when: >
+        not use_system_d
 
 - name: "Uninstall | Remove app version folder"
   file:

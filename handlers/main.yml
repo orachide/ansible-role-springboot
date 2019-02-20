@@ -7,3 +7,4 @@
     enabled: yes
     state: restarted
   become: true
+  when: sb_app_as_a_service
