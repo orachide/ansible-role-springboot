@@ -32,6 +32,8 @@ Role Variables
 
 | Variables | Required | Default value | Description |
 |-----------|----------|---------------|-------------|
+| sb_app_install_java  | false     | *true*          | should install java before installing app |
+| sb_app_create_users  | false     | *true*          | should create users before installing app |
 | sb_app_name  | true     | *None*          | the application name |
 | sb_app_group_id  | true     | *None*          | the maven artifact group id |
 | sb_app_artifact_id  | true     | *None*          | the maven artifact id |
@@ -65,6 +67,7 @@ Dependencies
 ------------
 
 This role can install JAVA using [geerlingguy.java](https://github.com/geerlingguy/ansible-role-java)
+This role can create APP user using [singleplatform-eng.users](https://github.com/singleplatform-eng/ansible-users)
 
 Example Playbook
 ----------------
