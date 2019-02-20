@@ -1,5 +1,20 @@
 ---
 
+
+- name: "Check vars | Assert sb_users_definition is defined"
+  assert:
+    that:
+      - "sb_users_definition is defined"
+    msg: "sb_users_definition must be defined"
+  when: sb_app_create_users
+
+- name: "Check vars | Assert sb_user_groups_definitions is defined"
+  assert:
+    that:
+      - "sb_user_groups_definitions is defined"
+    msg: "sb_user_groups_definitions must be defined"
+  when: sb_app_create_users
+
 - name: "Check vars | Assert sb_app_name is defined"
   assert:
     that:

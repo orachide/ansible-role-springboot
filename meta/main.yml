@@ -26,9 +26,10 @@ galaxy_info:
 dependencies:
   - role: singleplatform-eng.users
     users_create_per_user_group: false
-    groups_to_create: "{{ sb_user_groups_definitions }}"
+    groups_to_create: "{{ sb_user_groups_definitions | default(omit)}}"
     users: "{{ sb_users_definition }}"
+    when: sb_app_create_users
   - role: geerlingguy.java
-    # when: "ansible_os_family == 'RedHat'"
+    when: sb_app_install_java
     java_packages:
       - "{{ sb_java_package }}"
