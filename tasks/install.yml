@@ -53,8 +53,7 @@
     - "Restart application"
 
 - name: "Install | Download maven artifact on local host"
-  local_action:
-    module: maven_artifact
+  maven_artifact:
     group_id: "{{ sb_app_group_id }}"
     artifact_id: "{{ sb_app_artifact_id }}"
     version: "{{ sb_app_version }}"
@@ -65,6 +64,7 @@
     password: "{{ sb_app_repository_password | default(omit) }}"
     dest: "/{{ sb_local_maven_artifact_download_temp_folder }}/{{ sb_app_artifact_id }}-{{ sb_app_version }}.{{ sb_app_extension }}"
     mode: 0500
+  delegate_to: localhost
   when: >
         sb_app_artifact_file is not defined and
         sb_local_maven_artifact_dowload

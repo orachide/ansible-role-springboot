@@ -10,10 +10,10 @@
   become: true
 
 - name: "Prerequisites | Install python-lxml required by maven_artifact module on local host"
-  local_action:
-    module: package
+  package:
     name: python-lxml
     state: present
+  delegate_to: localhost
   when: >
         sb_app_artifact_file is not defined and
         sb_local_maven_artifact_dowload
