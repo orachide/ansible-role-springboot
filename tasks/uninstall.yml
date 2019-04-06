@@ -10,7 +10,7 @@
     path: "{{ sysd_script }}"
   register: systemd_service_status
 
-- name: "Uninstall | Stop {{ sb_app_name | lower}} service"
+- name: "Uninstall | Stop {{ sb_app_name | lower }} service"
   service:
     name: "{{ sb_app_name | lower }}"
     enabled: no

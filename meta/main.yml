@@ -4,7 +4,7 @@ galaxy_info:
   description: Deploy Spring Boot application as a service (initd or Systemd)
   company: chidix.fr
 
-  license: license (GPLv2, CC-BY, etc)
+  license: license BSD
 
   min_ansible_version: 2.4
 
@@ -26,7 +26,7 @@ galaxy_info:
 dependencies:
   - role: singleplatform-eng.users
     users_create_per_user_group: false
-    groups_to_create: "{{ sb_user_groups_definitions | default(omit)}}"
+    groups_to_create: "{{ sb_user_groups_definitions | default(omit) }}"
     users: "{{ sb_users_definition }}"
     when: sb_app_create_users
   - role: geerlingguy.java
