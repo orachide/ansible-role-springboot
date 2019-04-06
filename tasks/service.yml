@@ -26,6 +26,8 @@
   become: true
   when: >
         use_initd
+  notify:
+    - "Restart application"
 
 - name: "Service | Ensure {{  sb_app_name }} service is started"
   service:

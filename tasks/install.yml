@@ -36,7 +36,7 @@
     group_id: "{{ sb_app_group_id }}"
     artifact_id: "{{ sb_app_artifact_id }}"
     version: "{{ sb_app_version }}"
-    classifier: "{{ sb_app_classifier | default(omit)}}"
+    classifier: "{{ sb_app_classifier | default(omit) }}"
     extension: "{{ sb_app_extension }}"
     repository_url: "{{ sb_maven_repository_url }}"
     validate_certs: "{{ sb_maven_repository_validate_certs | default('no') }}"
@@ -57,7 +57,7 @@
     group_id: "{{ sb_app_group_id }}"
     artifact_id: "{{ sb_app_artifact_id }}"
     version: "{{ sb_app_version }}"
-    classifier: "{{ sb_app_classifier | default(omit)}}"
+    classifier: "{{ sb_app_classifier | default(omit) }}"
     extension: "{{ sb_app_extension }}"
     repository_url: "{{ sb_maven_repository_url }}"
     username: "{{ sb_app_repository_username | default(omit) }}"
@@ -98,6 +98,8 @@
     group: "{{ sb_app_user_group }}"
   when: >
         use_system_d
+  notify:
+    - "Restart application"
 
 - name: "Install | Source application service conf"
   template:
@@ -118,6 +120,8 @@
     group: "{{ sb_app_user_group }}"
   when: >
         use_system_d
+  notify:
+    - "Restart application"
 
 - debug: var=sb_app_config_file_template_path verbosity=1
 
@@ -143,6 +147,8 @@
   when: >
         sb_app_config_file_template_path is defined and
         use_system_d
+  notify:
+    - "Restart application"
 
 - name: "Install | Source application logback file"
   template:
@@ -166,6 +172,8 @@
   when: >
         sb_app_logback_file_template_path is defined and
         use_system_d
+  notify:
+    - "Restart application"
 
 - import_tasks: service.yml
   when: sb_app_as_a_service
