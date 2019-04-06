@@ -11,6 +11,6 @@ before_install:
 install:
   - pip install -r ci-requirement.txt
 script:
-  - molecule test --all
+  - molecule test -s default
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
