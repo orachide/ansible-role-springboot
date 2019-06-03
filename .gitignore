@@ -10,3 +10,6 @@
 *.log
 
 *.pytest_cache/
+
+# Tox
+.tox/

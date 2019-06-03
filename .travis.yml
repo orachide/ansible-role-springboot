@@ -4,13 +4,10 @@ language: python
 services:
   - docker
 before_install:
-  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-  - sudo apt-get update
-  - sudo apt-get -y install docker-ce
+  - sudo apt-get -qq update
 install:
-  - pip install -r ci-requirement.txt
+  - pip install tox-travis
 script:
-  - molecule test -s default
+  - tox
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

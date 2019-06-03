@@ -10,10 +10,10 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: sb_centos6
+  - name: sb_centos6-$TOX_ENVNAME
     image: centos:6
     privileged: True
-  - name: sb_centos7
+  - name: sb_centos7-$TOX_ENVNAME
     image: centos:7
     privileged: True
     command: '/sbin/init'
