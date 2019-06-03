@@ -18,6 +18,12 @@ platforms:
     privileged: True
     command: '/sbin/init'
     cap_add: ['SYS_ADMIN', 'SETPCAP']
+  - name: sb_ubuntu18-$TOX_ENVNAME
+    image: solita/ubuntu-systemd
+    command: /sbin/init
+    privileged: true
+    volumes:
+      - /lib/modules:/lib/modules:ro
 provisioner:
   name: ansible
   lint:

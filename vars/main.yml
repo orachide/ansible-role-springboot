@@ -1,5 +1,5 @@
 ---
 # vars file for role_spring_boot_app
 
-sysd_user_services_folder: /usr/lib/systemd/system
+sysd_user_services_folder: "{{ '/usr/lib/systemd/system' if (ansible_distribution in ['RedHat','CentOS']) else '/lib/systemd/system/' }}"
 sysd_script: "{{ sysd_user_services_folder }}/{{ sb_app_name | lower }}.service"

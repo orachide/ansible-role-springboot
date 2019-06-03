@@ -4,7 +4,7 @@
 # dependencies default var
 sb_app_install_java: true
 sb_app_create_users: true
-sb_java_package: java-1.8.0-openjdk
+sb_java_package: "{{ 'java-1.8.0-openjdk' if (ansible_distribution in ['RedHat','CentOS']) else 'openjdk-8-jdk' }}"
 
 sb_app_state: present
 sb_app_extension: jar

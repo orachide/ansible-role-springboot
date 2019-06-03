@@ -14,12 +14,12 @@
     sb_app_artifact_destination_file: "{{ sb_app_artifact_destination_folder }}/{{ sb_app_artifact_id }}-{{ sb_app_version }}.{{ sb_app_extension }}"
 
 - name: " Service | Check if use systemd"
-  set_fact: use_system_d={{ (ansible_distribution in ['RedHat','CentOS'] and ansible_distribution_version is version_compare('7', '>=')) }}
+  set_fact: use_system_d={{ ansible_service_mgr == 'systemd' }}
 
 - debug: var=ansible_distribution_version
 
 - name: " Service | Check if use use_initd"
-  set_fact: use_initd={{ (ansible_distribution in ['RedHat','CentOS'] and ansible_distribution_version is version_compare('7', '<')) }}
+  set_fact: use_initd={{ ansible_service_mgr == 'sysvinit' }}
 
 - import_tasks: install.yml
   when: >

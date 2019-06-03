@@ -9,7 +9,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 def test_service_is_started(host):
     ansible_vars = host.ansible.get_variables()
-    if (ansible_vars['inventory_hostname'] == 'sb_centos6'):
+    if (ansible_vars['inventory_hostname'].startswith('sb_centos6')):
         f = host.file('/etc/init.d/simple-springboot-app')
         assert f.exists
         assert f.user == 'sbuser'
