@@ -59,6 +59,7 @@ Role Variables
 | sb_app_healthcheck_ports  | false     | *None*          | TCP Ports to check if the service is healthy (should be an array)|
 | sb_app_service_java_home  | false     | *None*          | Set the __JAVA_HOME__ to use |
 | sb_app_stop_wait_time  | false     | 60 secs         | The time in seconds to wait when stopping the application before forcing a shutdown  |
+| sb_app_env  | false     | array with name and value        | Environment variables that will be added in the EnvironmentFile  |
 
 
 
@@ -95,6 +96,11 @@ Example Playbook
             - "http://localhost:8082/actuator/health"
           sb_app_healthcheck_ports:
             - 8082
+          sb_app_env:
+            - name: LOGGING_PATH
+              value: "{{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/logs"
+            - name: SERVER_PORT
+              value: 8080
 
 ### Using maven artifact from maven repository
 
@@ -120,6 +126,11 @@ Example Playbook
             - "http://localhost:8082/actuator/health"
           sb_app_healthcheck_ports:
             - 8082
+          sb_app_env:
+            - name: LOGGING_PATH
+              value: "{{ sb_applications_root_folder }}/{{ sb_app_name | upper }}/logs"
+            - name: SERVER_PORT
+              value: 8080
 
 ### Deploy multiple microservices to the same hosts
 

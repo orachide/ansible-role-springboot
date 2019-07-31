@@ -37,3 +37,4 @@
       sb_app_healthcheck_ports:
         - 8080
         - 8443
+      sb_app_env: []

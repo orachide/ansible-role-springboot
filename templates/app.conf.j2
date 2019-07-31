@@ -16,3 +16,6 @@ LOG_FILENAME={{ sb_initd_log_filename }}
 {% if sb_app_stop_wait_time is defined %}
 STOP_WAIT_TIME={{ sb_app_stop_wait_time }}
 {% endif %}
+{% for item in sb_app_env %}
+{{item.name}}="{{item.value | regex_replace('"', '\\"')}}"
+{% endfor %}
