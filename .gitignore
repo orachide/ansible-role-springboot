@@ -13,3 +13,6 @@
 
 # Tox
 .tox/
+
+# IntelliJ IDEA
+.idea/
