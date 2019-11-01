@@ -3,7 +3,7 @@ galaxy_info:
   author: orachide
   description: Deploy Spring Boot application as a service (initd or Systemd)
   company: chidix.fr
-
+  role_name: springboot-service
   license: license BSD
 
   min_ansible_version: 2.4

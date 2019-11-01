@@ -21,12 +21,6 @@
       - "sb_app_name is defined"
     msg: "sb_app_name must be defined"
 
-- name: "Check vars | Assert sb_app_version is defined"
-  assert:
-    that:
-      - "sb_app_version is defined"
-    msg: "sb_app_version must be defined"
-
 - name: "Check vars | Assert sb_app_group_id is defined"
   assert:
     that:
