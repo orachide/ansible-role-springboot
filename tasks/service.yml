@@ -33,5 +33,6 @@
   service:
     name: "{{  sb_app_name | lower }}"
     enabled: yes
+    daemon_reload: yes
     state: started
   become: true
